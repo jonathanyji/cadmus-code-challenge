@@ -10,3 +10,6 @@ Pre requirements:
 5. Start the server and client
 
 
+Note:
+Attempted to install Draftjs word count plugin but it was causing some error, hence I removed it
+https://www.npmjs.com/package/@draft-js-plugins/counter

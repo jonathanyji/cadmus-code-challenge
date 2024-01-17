@@ -1,0 +1,12 @@
+Pre requirements:
+
+1. Install MySQL server
+2. Configure the connection in server.js 
+    host: 'yourhost',
+    user: 'yourusername',
+    password: 'yourpassword',
+3. Run the notes_db_script.sql script in server/ folder
+4. npm i on server and clients folder
+5. Start the server and client
+
+

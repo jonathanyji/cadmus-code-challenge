@@ -3,6 +3,8 @@ import { Editor, EditorState, getDefaultKeyBinding, RichUtils, convertToRaw, Con
 import './RichText.css'
 import '../../node_modules/draft-js/dist/Draft.css'
 import { NotesApiService } from '../services/NotesApiService';
+import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class RichTextEditor extends React.Component {
     constructor(props) {
@@ -127,7 +129,6 @@ class RichTextEditor extends React.Component {
 
     async saveContent() {
       const data = this.getCurrentContent();
-      // localStorage.setItem("savedContent", json);
       console.log("SAVED")
       console.log("TEST DATA SASVED: ", data)
 
@@ -175,7 +176,7 @@ class RichTextEditor extends React.Component {
               spellCheck={true}
             />
           </div>
-          <button onClick={this.saveContent.bind(this)}>Save Content</button>
+          <Button variant="primary" onClick={this.saveContent.bind(this)}>Save Content</Button>
         </div>
       );
     }

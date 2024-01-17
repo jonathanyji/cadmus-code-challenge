@@ -1,7 +1,8 @@
 import React from 'react';
-import { Editor, EditorState, getDefaultKeyBinding, RichUtils } from 'draft-js';
+import { Editor, EditorState, getDefaultKeyBinding, RichUtils, convertToRaw, ContentState, ContentBlock } from 'draft-js';
 import './RichText.css'
 import '../../node_modules/draft-js/dist/Draft.css'
+import { NotesApiService } from '../services/NotesApiService';
 
 class RichTextEditor extends React.Component {
     constructor(props) {
@@ -59,6 +60,85 @@ class RichTextEditor extends React.Component {
       );
     }
 
+    formatData(data){
+      console.log("FORMAT DATA: ", data);
+      const dataTemplate = {
+        id: '123',
+        words: '123',
+        rowPosition: 0,
+        style: '',
+      }
+
+      const formattedData = data.map((item, index) => {
+        return {
+          id: item.key || dataTemplate.id,
+          words: item.text || dataTemplate.words,
+          rowPosition: index || dataTemplate.rowPosition,
+          style: item.type || dataTemplate.style,
+        };
+      });
+    
+      console.log("Formatted Data: ", formattedData);
+      return formattedData;
+    }
+
+    getCurrentContent() {
+      const contentState = this.state.editorState.getCurrentContent();
+      const arrayOfRows = convertToRaw(contentState).blocks;
+      return arrayOfRows;
+    }
+
+    componentDidMount() {
+      this.fetchData();
+    }
+
+    sortData(data) {
+      return data.sort((a, b) => parseInt(a.rowPosition, 10) - parseInt(b.rowPosition, 10));
+    };
+  
+    fetchData = async () => {
+      try {
+        const data = await NotesApiService.getNotesEntryApi();
+        const sortedData = this.sortData(data);
+
+        const contentBlocks = sortedData.map(item => {
+          const blockKey = `${item.id}`;
+          const block = new ContentBlock({
+            key: blockKey,
+            text: item.words,
+            type: item.style,
+          });
+    
+          return block;
+        });
+
+        console.log("contentBlocks: ", contentBlocks)
+
+        const contentState = ContentState.createFromBlockArray(contentBlocks);
+        const newEditorState = EditorState.createWithContent(contentState);
+    
+        this.setState({ editorState: newEditorState });
+
+
+      } catch (error) {
+        console.error('Error fetching and setting data:', error);
+      }
+    };
+
+    async saveContent() {
+      const data = this.getCurrentContent();
+      // localStorage.setItem("savedContent", json);
+      console.log("SAVED")
+      console.log("TEST DATA SASVED: ", data)
+
+      const dataToSubmit = {
+        content: this.formatData(data)
+      }
+
+      await NotesApiService.saveNotesEntryApi(dataToSubmit)
+
+    }
+
     render() {
       const {editorState} = this.state;
 
@@ -95,6 +175,7 @@ class RichTextEditor extends React.Component {
               spellCheck={true}
             />
           </div>
+          <button onClick={this.saveContent.bind(this)}>Save Content</button>
         </div>
       );
     }

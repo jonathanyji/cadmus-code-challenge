@@ -16,9 +16,21 @@ export const NotesApiService = {
         }
     },
 
-    async listNotesApi() {
+    async saveNotesEntryApi(content) {
         try {
-            const res = await this._handleHttpCall('GET','items');
+            const res = await this._handleHttpCall('POST','storeData', content);
+            this._handleRequestError(res);
+            const data = await res.json();
+            return data;
+        }
+        catch (err) {
+            return Promise.reject(err)
+        }
+    },
+
+    async getNotesEntryApi() {
+        try {
+            const res = await this._handleHttpCall('Get','getAllData');
             this._handleRequestError(res);
             const data = await res.json();
             return data;

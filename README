@@ -11,5 +11,5 @@ Pre requirements:
 
 
 Note:
-Attempted to install Draftjs word count plugin but it was causing some error, hence I removed it
+I have sticked to the 4 hour time limit and I have also attempted to install Draftjs word count plugin but it was causing some error, hence I removed it
 https://www.npmjs.com/package/@draft-js-plugins/counter

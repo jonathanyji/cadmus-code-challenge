@@ -5,7 +5,7 @@ const NotesComponent = () => {
   return (
     <div>
       <h1>My Notes</h1>
-      <RichTextEditor/>
+      <RichTextEditor />
     </div>
   );
 };

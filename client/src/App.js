@@ -5,7 +5,7 @@ import NotesComponent from './components/notes-component';
 function App() {
   return (
     <div className="App">
-      <NotesComponent/>
+      <NotesComponent />
     </div>
   );
 }

@@ -19,9 +19,13 @@ function App() {
           Learn React
         </a>
       </header> */}
-      App.js Start
+
       <NotesComponent/>
-      App.js end
+
+
+
+      
+
     </div>
   );
 }

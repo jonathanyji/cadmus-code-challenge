@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NotesApiService } from '../services/NotesApiService';
+import RichTextEditor from './RichTextEditor';
 
 const NotesComponent = () => {
   const [items, setItems] = useState([]);
@@ -23,7 +24,8 @@ const NotesComponent = () => {
 
   return (
     <div>
-      <h1>NOTES COMPONENTS</h1>
+      <h1>My Notes</h1>
+      <RichTextEditor/>
       <ul>
         {items.map(item => (
           <li key={item.id}>{item.name}</li>
